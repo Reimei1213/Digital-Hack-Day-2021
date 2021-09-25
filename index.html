@@ -10,7 +10,11 @@
     <style>
         body { margin: 0; padding: 0; }
         .map { position: absolute; top:50px; bottom: 0; width: 100%; }
-        /*.tab-pane { position: relative; }*/
+        .map-wrapper { 
+            position: relative;
+            width: 100%;
+            heigth: 100%;
+        }
     </style>
 </head>
 <body>
@@ -34,6 +38,11 @@
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="other-tab" data-bs-toggle="tab" href="#other" role="tab" aria-controls="other" aria-selected="false">その他</a>
         </li>
+        
+        <div class="clearfix">
+            <!--<div class="pull-left"><h1>見出し</h1></div>-->
+            <div class="pull-right"><button type="button" class="btn btn-info rounded-circle p-0" style="width:2rem;height:2rem; color: white;">?</button></div>
+        </div>
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><div class="map" id="home-map"></div></div>
@@ -41,7 +50,11 @@
         <div class="tab-pane fade" id="rough" role="tabpanel" aria-labelledby="rough-tab"><div class="map" id="crough-map"></div></div>
         <div class="tab-pane fade" id="intelligence" role="tabpanel" aria-labelledby="intelligence-tab"><div class="map" id="intelligence-map"></div></div>
         <div class="tab-pane fade" id="customs" role="tabpanel" aria-labelledby="customs-tab"><div class="map" id="customs-map"></div></div>
-        <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab"><div class="map" id="other-map"></div></div>
+        <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
+            <div class="map-wrapper">
+                 <div class="map" id="other-map"></div>
+            </div>
+        </div>
     </div>
     
     <script>
@@ -102,18 +115,18 @@
             closeButton: false
         });
         
-        const mapObjects = [homeMap, thugMap, croughMap, intelligenceMap, customsMap, otherMap];
+        const mapObjects = [{obj: homeMap, code: "c_sum"}, {obj: thugMap, code: "c_1"}, {obj: croughMap, code: "c_5"}, {obj: intelligenceMap, code: "c_10"}, {obj: customsMap, code: "c_13"},{obj: otherMap, code: "c_16"}];
         for (var i = 0; i < mapObjects.length; i++) {
             var obj = mapObjects[i];
-            showPopup(obj);
+            showPopup(obj.obj, obj.code);
         }
         
-        function showPopup(obj) {
+        function showPopup(obj, code) {
             obj.on('click', (e) => {
                 console.log("aaaa!!");
                 obj.getCanvas().style.cursor = 'pointer';
                 popup.remove();
-                const yahooApiUrl = "http://18.181.84.52:8000/yahoo/" + e.lngLat.lat + "/" + e.lngLat.lng;
+                const yahooApiUrl = "http://18.181.84.52:8000/yahoo/" + e.lngLat.lat + "/" + e.lngLat.lng + "/" + code;
                 let request = new XMLHttpRequest();
                 request.open('GET', yahooApiUrl, true);
                 request.responseType = 'document';
@@ -122,7 +135,7 @@
                     let data = this.response.body.innerHTML; 
                     popup
                         .setLngLat(e.lngLat)
-                        .setText(data ? data : "エラーが発生しました。")
+                        .setText(data ? data : "-- 取得できませんでした --")
                         .addTo(obj);
                 }
             }

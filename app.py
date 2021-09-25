@@ -44,8 +44,8 @@ def crimeinfo(tag):
         fill_colors.append("hsl(64, 83%, 55%)")
     if len(blue) > 0:
         fill_colors.append(blue)
-        fill_colors.append("hsl(232, 83%, 55%)")
-    fill_colors.append("hsl(87, 83%, 55%)")
+        fill_colors.append("hsl(87, 83%, 55%)")
+    fill_colors.append("hsl(87, 0%, 95%)")
             
     
     layer_source = {
@@ -75,8 +75,8 @@ def crimeinfo(tag):
         json_body["layers"].append(layer_source2)
         return json_body
     
-@app.route("/yahoo/<lat>/<lon>")
-def yahooApi(lat, lon):
+@app.route("/yahoo/<lat>/<lon>/<code>")
+def yahooApi(lat, lon, code):
     url = "https://map.yahooapis.jp/geocode/V1/geoCoder?appid=dj00aiZpPWE5ZldCOTlTbmZMcCZzPWNvbnN1bWVyc2VjcmV0Jng9YWM-&al=2&ar=eq&lat=" + lat + "&lon=" + lon
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
@@ -85,6 +85,9 @@ def yahooApi(lat, lon):
         text = ""
         if int(root[0][1].text) > 0:
             text = root[1][2].text
+        for i, row in main_df.iterrows():
+            if text.find(row["prefecture"]) > -1:
+                text = row["prefecture"] + "の犯罪総数: " + str(row[code]) + "\n"
         print(text)
     return text
 
