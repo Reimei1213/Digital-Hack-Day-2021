@@ -6,6 +6,7 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <style>
         body { margin: 0; padding: 0; }
@@ -41,7 +42,7 @@
         
         <div class="clearfix">
             <!--<div class="pull-left"><h1>見出し</h1></div>-->
-            <div class="pull-right"><button type="button" class="btn btn-info rounded-circle p-0" style="width:2rem;height:2rem; color: white;">?</button></div>
+            <div class="pull-right"><button type="button" class="btn btn-info rounded-circle p-0" data-bs-toggle="modal" data-bs-target="#explanationModal" style="width:2rem;height:2rem; color: white;">?</button></div>
         </div>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -51,10 +52,128 @@
         <div class="tab-pane fade" id="intelligence" role="tabpanel" aria-labelledby="intelligence-tab"><div class="map" id="intelligence-map"></div></div>
         <div class="tab-pane fade" id="customs" role="tabpanel" aria-labelledby="customs-tab"><div class="map" id="customs-map"></div></div>
         <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
-            <div class="map-wrapper">
-                 <div class="map" id="other-map"></div>
-            </div>
+            <div class="map" id="other-map"></div>
         </div>
+    </div>
+    
+    <div class="modal fade" id="explanationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">罪名内訳</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 100px;">包括罪種</th>
+                  <th scope="col">罪種</th>
+                  <th scope="col">内訳罪名</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <th scope="row" rowspan="4">凶悪犯</th>
+                    <td>殺人</td>
+                    <td>殺人罪、嬰児殺、殺人予備罪、自殺関与罪</td>
+                </tr>
+                <tr>
+                    <td>強盗</td>
+                    <td>
+                        強盗殺人罪（致死を含む。）、強盗傷人罪、強盗・強制性交等罪（致死を含む。）、
+                        強盗罪・準強盗罪(強盗予備、事後強盗、昏睡強盗)
+                    </td>
+                </tr>
+                <tr>
+                    <td>放火</td>
+                    <td>放火罪、消火妨害罪</td>
+                </tr>
+                <tr>
+                    <td>強制性交等</td>
+                    <td>強制性交等罪（致死傷を含む。）、準強制性交等罪、監護者性交等罪</td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" rowspan="5">粗暴犯</th>
+                    <td>凶器準備集合</td>
+                    <td>凶器準備集合罪、凶器準備結集罪</td>
+                </tr>
+                <tr>
+                    <td>暴行</td>
+                    <td>暴行罪</td>
+                </tr>
+                <tr>
+                    <td>傷害</td>
+                    <td>傷害罪、傷害致死罪、現場助勢罪</td>
+                </tr>
+                <tr>
+                    <td>脅迫</td>
+                    <td>脅迫罪、強要罪</td>
+                </tr>
+                <tr>
+                    <td>恐喝</td>
+                    <td>恐喝罪</td>
+                </tr>
+                
+                <tr>
+                    <th scope="row">窃盗犯</th>
+                    <td>窃盗</td>
+                    <td>窃盗罪</td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" rowspan="6">知能犯</th>
+                    <td>詐欺</td>
+                    <td>詐欺罪、準詐欺罪</td>
+                </tr>
+                <tr>
+                    <td>横領</td>
+                    <td>横領罪、業務上横領罪</td>
+                </tr>
+                <tr>
+                    <td>偽造</td>
+                    <td>通貨偽造罪、文書偽造罪、支払用カード偽造罪、有価証券偽造罪、印章偽造罪</td>
+                </tr>
+                <tr>
+                    <td>汚職</td>
+                    <td>賄賂罪(収賄罪・贈賄罪)、職権濫用罪（致死傷を含む。）</td>
+                </tr>
+                <tr>
+                    <td>あっせん利得処罰法</td>
+                    <td>公職にある者等のあっせん行為による利得等の処罰に関する法律に規定する罪</td>
+                </tr>
+                <tr>
+                    <td>背任</td>
+                    <td>背任罪</td>
+                </tr>
+                
+                <tr>
+                    <th scope="row" rowspan="2">風俗犯</th>
+                    <td>賭博</td>
+                    <td>普通賭博罪、常習賭博罪、賭博開帳等罪</td>
+                </tr>
+                <tr>
+                    <td>わいせつ</td>
+                    <td>
+                        強制わいせつ罪（致死傷を含む。）、準強制わいせつ罪、監護者わいせつ罪、
+                        公然わいせつ罪、わいせつ物頒布等罪
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th scope="row">その他</th>
+                    <td>上記以外の罪種</td>
+                    <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
     
     <script>
@@ -144,6 +263,14 @@
     }
         
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+       var tabEls = document.querySelectorAll('a[data-bs-toggle="tab"]')
+       for (var i = 0; i < tabEls.length; i++) {
+           var tabEl = tabEls[i]
+           tabEl.addEventListener('shown.bs.tab', function (event) {
+               console.log("aaaa");
+            });
+       }
+    </script>
 </body>
 </html>
