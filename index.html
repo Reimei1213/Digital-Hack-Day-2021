@@ -6,181 +6,126 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <style>
-    body { margin: 0; padding: 0; }
-    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        body { margin: 0; padding: 0; }
+        .map { position: absolute; top:50px; bottom: 0; width: 100%; }
+        /*.tab-pane { position: relative; }*/
     </style>
 </head>
 <body>
-    <style>
-        .map-overlay {
-            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-            background-color: #fff;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            border-radius: 3px;
-            position: absolute;
-            width: 25%;
-            top: 10px;
-            left: 10px;
-            padding: 10px;
-            display: none;
-        }
-    </style>
     
-    <div id="map"></div>
-    <div id="map-overlay" class="map-overlay"></div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">総数</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="thug-tab" data-bs-toggle="tab" href="#thug" role="tab" aria-controls="thug" aria-selected="false">凶悪犯</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="rough-tab" data-bs-toggle="tab" href="#rough" role="tab" aria-controls="crough" aria-selected="false">粗暴犯</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="intelligence-tab" data-bs-toggle="tab" href="#intelligence" role="tab" aria-controls="intelligence" aria-selected="false">知能犯</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="customs-tab" data-bs-toggle="tab" href="#customs" role="tab" aria-controls="customs" aria-selected="false">風俗犯</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="other-tab" data-bs-toggle="tab" href="#other" role="tab" aria-controls="other" aria-selected="false">その他</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><div class="map" id="home-map"></div></div>
+        <div class="tab-pane fade" id="thug" role="tabpanel" aria-labelledby="thug-tab"><div class="map" id="thug-map"></div></div>
+        <div class="tab-pane fade" id="rough" role="tabpanel" aria-labelledby="rough-tab"><div class="map" id="crough-map"></div></div>
+        <div class="tab-pane fade" id="intelligence" role="tabpanel" aria-labelledby="intelligence-tab"><div class="map" id="intelligence-map"></div></div>
+        <div class="tab-pane fade" id="customs" role="tabpanel" aria-labelledby="customs-tab"><div class="map" id="customs-map"></div></div>
+        <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab"><div class="map" id="other-map"></div></div>
+    </div>
     
     <script>
     	mapboxgl.accessToken = 'pk.eyJ1IjoicmVpbWVpIiwiYSI6ImNrdHo1MHNqcjBoN3UzMG56d2pzdmFjZ28ifQ.ZlXYxLdsJNUu1FZgmxWNAg';
-        const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/reimei/cktz5k9480zr518uh8h1wxdc5',
-            center: [139.3, 35.5],
-            minZoom: 2,
-            zoom: 9
+    	const center = [139.3, 35.5];
+    	const minZoom = 2;
+    	const zoom = 9;
+
+        const homeMap = new mapboxgl.Map({
+            container: 'home-map',
+            style: "http://18.181.84.52:8000/crimeinfo/c_sum",
+            center: center,
+            minZoom: minZoom,
+            zoom: zoom
         });
-    
-        const overlay = document.getElementById('map-overlay');
-    
-        // Create a popup, but don't add it to the map yet.
+        
+        const thugMap = new mapboxgl.Map({
+            container: 'thug-map',
+            style: "http://18.181.84.52:8000/crimeinfo/c_1",
+            center: center,
+            minZoom: minZoom,
+            zoom: zoom
+        });
+        
+        const croughMap = new mapboxgl.Map({
+            container: 'crough-map',
+            style: "http://18.181.84.52:8000/crimeinfo/c_5",
+            center: center,
+            minZoom: minZoom,
+            zoom: zoom
+        });
+        
+        const intelligenceMap = new mapboxgl.Map({
+            container: 'intelligence-map',
+            style: "http://18.181.84.52:8000/crimeinfo/c_10",
+            center: center,
+            minZoom: minZoom,
+            zoom: zoom
+        });
+        
+        const customsMap = new mapboxgl.Map({
+            container: 'customs-map',
+            style: "http://18.181.84.52:8000/crimeinfo/c_13",
+            center: center,
+            minZoom: minZoom,
+            zoom: zoom
+        });
+        
+        const otherMap = new mapboxgl.Map({
+            container: "other-map",
+            style: "http://18.181.84.52:8000/crimeinfo/c_16",
+            center: center,
+            minZoom: minZoom,
+            zoom: zoom
+        });
+        
         const popup = new mapboxgl.Popup({
             closeButton: false
         });
-    
-        // Because features come from tiled vector data,
-        // feature geometries may be split
-        // or duplicated across tile boundaries.
-        // As a result, features may appear
-        // multiple times in query results.
-        function getUniqueFeatures(features, comparatorProperty) {
-            const uniqueIds = new Set();
-            const uniqueFeatures = [];
-            for (const feature of features) {
-                const id = feature.properties[comparatorProperty];
-                if (!uniqueIds.has(id)) {
-                    uniqueIds.add(id);
-                    uniqueFeatures.push(feature);
+        
+        homeMap.on('click', (e) => {
+            homeMap.getCanvas().style.cursor = 'pointer';
+            popup.remove();
+            const yahooApiUrl = "http://18.181.84.52:8000/yahoo/" + e.lngLat.lat + "/" + e.lngLat.lng;
+            let request = new XMLHttpRequest();
+            request.open('GET', yahooApiUrl, true);
+            request.responseType = 'document';
+            request.onload = function() {
+                if (request.readyState === request.DONE && request.status === 200){
+                    let data = this.response.body.innerHTML; 
+                    popup
+                        .setLngLat(e.lngLat)
+                        .setText(data ? data : "エラーが発生しました。");
+                        .addTo(homeMap);
                 }
             }
-            return uniqueFeatures;
-        }
-    
-        map.on('load', () => {
-            // Add a custom vector tileset source. The tileset used in
-            // this example contains a feature for every county in the U.S.
-            // Each county contains four properties. For example:
-            // {
-            //     COUNTY: "Uintah County",
-            //     FIPS: 49047,
-            //     median-income: 62363,
-            //     population: 34576
-            // }
-            map.addSource('counties', {
-                'type': 'vector',
-                'url': 'mapbox://mapbox.82pkq93d'
-            });
-            
-            // Add transparent county polygons
-            // for default display.
-            map.addLayer(
-                {
-                    'id': 'counties',
-                    'type': 'fill',
-                    'source': 'counties',
-                    'source-layer': 'original',
-                    'paint': {
-                        'fill-outline-color': 'rgba(0,0,0,0.1)',
-                        'fill-color': 'rgba(0,0,0,0.1)'
-                    }
-                },
-                'settlement-label'
-            ); // Place polygons under labels.
-    
-            // Add filled county polygons
-            // for highlighted display.
-            map.addLayer(
-                {
-                    'id': 'counties-highlighted',
-                    'type': 'fill',
-                    'source': 'counties',
-                    'source-layer': 'original',
-                    'paint': {
-                        'fill-outline-color': '#484896',
-                        'fill-color': '#6e599f',
-                        'fill-opacity': 0.75
-                    },
-                    // Display none by adding a
-                    // filter with an empty string.
-                    'filter': ['in', 'COUNTY', '']
-                },
-                // Place polygons under labels.
-                'settlement-label'
-            );
-    
-            map.on('mousemove', 'counties', (e) => {
-                // Change the cursor style as a UI indicator.
-                map.getCanvas().style.cursor = 'pointer';
-    
-                // Use the first found feature.
-                const feature = e.features[0];
-    
-                // Query the counties layer visible in the map.
-                // Only onscreen features are returned.
-                // Use filter to collect only results
-                // with the same county name.
-                const relatedCounties = map.querySourceFeatures('counties', {
-                    sourceLayer: 'original',
-                    filter: ['in', 'COUNTY', feature.properties.COUNTY]
-                });
-    
-                // Remove duplicates by checking for matching FIPS county ID.
-                const uniqueCounties = getUniqueFeatures(relatedCounties, 'FIPS');
-    
-                // Total the populations of all features.
-                const populationSum = uniqueCounties.reduce((memo, feature) => {
-                    return memo + feature.properties.population;
-                }, 0);
-    
-                // Render found features in an overlay.
-                const title = document.createElement('strong');
-                title.textContent =
-                    feature.properties.COUNTY +
-                    ' (' +
-                    uniqueCounties.length +
-                    ' found)';
-    
-                const population = document.createElement('div');
-                population.textContent =
-                    'Total population: ' + populationSum.toLocaleString();
-    
-                overlay.innerHTML = '';
-                overlay.style.display = 'block';
-    
-                overlay.appendChild(title);
-                overlay.appendChild(population);
-    
-                // Add features with the same county name
-                // to the highlighted layer.
-                map.setFilter('counties-highlighted', [
-                    'in',
-                    'COUNTY',
-                    feature.properties.COUNTY
-                ]);
-    
-                // Display a popup with the name of the county.
-                popup
-                    .setLngLat(e.lngLat)
-                    .setText(feature.properties.COUNTY)
-                    .addTo(map);
-            });
-    
-            map.on('mouseleave', 'counties', () => {
-                map.getCanvas().style.cursor = '';
-                popup.remove();
-                map.setFilter('counties-highlighted', ['in', 'COUNTY', '']);
-                overlay.style.display = 'none';
-            });
+            request.send();
         });
+        
+        function showPopup(e) {
+            
+        }
+        
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>
 </html>
