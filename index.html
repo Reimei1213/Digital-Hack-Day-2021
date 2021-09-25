@@ -102,28 +102,33 @@
             closeButton: false
         });
         
-        homeMap.on('click', (e) => {
-            homeMap.getCanvas().style.cursor = 'pointer';
-            popup.remove();
-            const yahooApiUrl = "http://18.181.84.52:8000/yahoo/" + e.lngLat.lat + "/" + e.lngLat.lng;
-            let request = new XMLHttpRequest();
-            request.open('GET', yahooApiUrl, true);
-            request.responseType = 'document';
-            request.onload = function() {
+        const mapObjects = [homeMap, thugMap, croughMap, intelligenceMap, customsMap, otherMap];
+        for (var i = 0; i < mapObjects.length; i++) {
+            var obj = mapObjects[i];
+            showPopup(obj);
+        }
+        
+        function showPopup(obj) {
+            obj.on('click', (e) => {
+                console.log("aaaa!!");
+                obj.getCanvas().style.cursor = 'pointer';
+                popup.remove();
+                const yahooApiUrl = "http://18.181.84.52:8000/yahoo/" + e.lngLat.lat + "/" + e.lngLat.lng;
+                let request = new XMLHttpRequest();
+                request.open('GET', yahooApiUrl, true);
+                request.responseType = 'document';
+                request.onload = function() {
                 if (request.readyState === request.DONE && request.status === 200){
                     let data = this.response.body.innerHTML; 
                     popup
                         .setLngLat(e.lngLat)
-                        .setText(data ? data : "エラーが発生しました。");
-                        .addTo(homeMap);
+                        .setText(data ? data : "エラーが発生しました。")
+                        .addTo(obj);
                 }
             }
             request.send();
         });
-        
-        function showPopup(e) {
-            
-        }
+    }
         
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
