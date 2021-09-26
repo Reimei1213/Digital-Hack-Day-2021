@@ -290,7 +290,7 @@
                         let data = this.response.body.innerHTML;
                         popup
                             .setLngLat(e.lngLat)
-                            .setText(data ? data : "-- 取得できませんでした --")
+                            .setHTML(data ? data : "-- 取得できませんでした --")
                             .addTo(obj);
                     }
                 }

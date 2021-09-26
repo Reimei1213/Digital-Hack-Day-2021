@@ -88,7 +88,7 @@ def yahooApi(lat, lon, code):
         for i, row in main_df.iterrows():
             if text.find(row["prefecture"]) > -1:
                 point = int(row[code]) / (int(row["population"])/10000)
-                text = row["prefecture"] + "の1万人あたりの犯罪数: " + str(round(point, 2)) + "\r\n" + "総犯罪罪数: " + str(int(row[code]))
+                text = row["prefecture"] + "の1万人あたりの犯罪数: " + str(round(point, 2)) + "<br>" + "総犯罪数: " + str(int(row[code]))
     return text
 
 
