@@ -21,16 +21,16 @@ def res_json():
     with open("./style.json") as f:
         json_body = json.loads(f.read())
         return json_body
-    
+    # 犯罪数 / (人口/1万)
 @app.route("/crimeinfo/<tag>")
 def crimeinfo(tag):
     red, yello, blue = [], [], []
     for i, row in main_df.iterrows():
-        counter = int(row[tag])
+        point = int(row[tag]) / (int(row["population"])/10000)
         pref_id = int(row["id"])
-        if counter >= 500:
+        if point >= 25:
             red.append(pref_id)
-        elif counter >= 100:
+        elif point >= 17:
             yello.append(pref_id)
         else:
             blue.append(pref_id)
@@ -87,8 +87,8 @@ def yahooApi(lat, lon, code):
             text = root[1][2].text
         for i, row in main_df.iterrows():
             if text.find(row["prefecture"]) > -1:
-                text = row["prefecture"] + "の犯罪総数: " + str(row[code]) + "\n"
-        print(text)
+                point = int(row[code]) / (int(row["population"])/10000)
+                text = row["prefecture"] + "の1万人あたりの犯罪数: " + str(round(point, 2)) + "\r\n" + "総犯罪罪数: " + str(int(row[code]))
     return text
 
 

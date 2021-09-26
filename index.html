@@ -27,36 +27,56 @@
             width: 100%;
             heigth: 100%;
         }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header .clearfix {
+            padding: 10px 30px 10px 0;
+        }
+        
+        .header .clearfix div {
+            display: inline-block;
+            padding: 0 5px;
+        }
+        
     </style>
 </head>
 
 <body>
-
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">総数</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="thug-tab" data-bs-toggle="tab" href="#thug" role="tab" aria-controls="thug" aria-selected="false">凶悪犯</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="rough-tab" data-bs-toggle="tab" href="#rough" role="tab" aria-controls="crough" aria-selected="false">粗暴犯</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="intelligence-tab" data-bs-toggle="tab" href="#intelligence" role="tab" aria-controls="intelligence" aria-selected="false">知能犯</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="customs-tab" data-bs-toggle="tab" href="#customs" role="tab" aria-controls="customs" aria-selected="false">風俗犯</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="other-tab" data-bs-toggle="tab" href="#other" role="tab" aria-controls="other" aria-selected="false">その他</a>
-        </li>
-
+    <div class="header">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">総数</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="thug-tab" data-bs-toggle="tab" href="#thug" role="tab" aria-controls="thug" aria-selected="false">凶悪犯</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="rough-tab" data-bs-toggle="tab" href="#rough" role="tab" aria-controls="crough" aria-selected="false">粗暴犯</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="intelligence-tab" data-bs-toggle="tab" href="#intelligence" role="tab" aria-controls="intelligence" aria-selected="false">知能犯</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="customs-tab" data-bs-toggle="tab" href="#customs" role="tab" aria-controls="customs" aria-selected="false">風俗犯</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="other-tab" data-bs-toggle="tab" href="#other" role="tab" aria-controls="other" aria-selected="false">その他</a>
+            </li>
+        </ul>
         <div class="clearfix">
-            <!--<div class="pull-left"><h1>見出し</h1></div>-->
-            <div class="pull-right"><button type="button" class="btn btn-info rounded-circle p-0" data-bs-toggle="modal" data-bs-target="#explanationModal" style="width:2rem;height:2rem; color: white;">?</button></div>
+            <div>
+                <p>データ：令和3年 1~8月</p>
+            </div>
+           <div>
+                <button type="button" class="btn btn-info rounded-circle p-0" data-bs-toggle="modal" data-bs-target="#explanationModal" style="width:2rem;height:2rem; color: white;">?</button>
+           </div>
         </div>
-    </ul>
+    </div>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="map" id="home-map"></div>
